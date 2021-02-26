@@ -382,7 +382,7 @@ public class OshiWrapper {
 
 	public static void main(String[] args) {
 //		logger.info(JSON.toJSONString(getSystemInfo(), true));
-//		getProcGrpStat();
+		getProcGrpStat();
 	}
 
 	/**
