@@ -1,46 +1,42 @@
-package org.ayakaji.verify;
+package org.ayakaji.cisco;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.net.SocketException;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.logging.Logger;
 
-import org.apache.commons.net.telnet.EchoOptionHandler;
-import org.apache.commons.net.telnet.InvalidTelnetOptionException;
-import org.apache.commons.net.telnet.SuppressGAOptionHandler;
 import org.apache.commons.net.telnet.TelnetClient;
-import org.apache.commons.net.telnet.TerminalTypeOptionHandler;
+import org.ayakaji.conf.IniUtil;
+import org.ini4j.Profile.Section;
 
-public class TelnetClientVerifier {
-	private static final String ip = "10.19.194.134";
-	private static final int port = 8023;
-	private static final String user = "neteagle";
-	private static final String pass = "Huaxun@123";
-	private static final TerminalTypeOptionHandler ttoh = new TerminalTypeOptionHandler("VT100", false, false, true,
-			false);
-	private static final EchoOptionHandler eoh = new EchoOptionHandler(true, false, true, false);
-	private static final SuppressGAOptionHandler sgaoh = new SuppressGAOptionHandler(true, true, true, true);
+public class CiscoWrapper {
+	private static final Logger logger = Logger.getLogger(CiscoWrapper.class.getName());
+	private static final String CISCO_INI = "cisco.ini";
+	private static final Set<Entry<String, Section>> ciscoSystems;
 
-	public static void main(String[] args) throws InvalidTelnetOptionException, IOException {
+	static {
+		ciscoSystems = IniUtil.readIni(CISCO_INI);
+		// Add Config Verify
+	}
+
+	public static void main(String[] args) throws SocketException, IOException {
+		// Add Connect
+		// Call Command
+		// Regex Parse
+		// DOM Read
+		
 		TelnetClient tc = new TelnetClient();
-		tc.addOptionHandler(ttoh);
-		tc.addOptionHandler(eoh);
-		tc.addOptionHandler(sgaoh);
-		tc.connect(ip, port);
+//		tc.connect(ip, port);
 		InputStream is = tc.getInputStream();
 		PrintStream os = new PrintStream(tc.getOutputStream());
 		readUntil(is, os, "login:");
-		write(os, user);
+//		write(os, user);
 		readUntil(is, os, "assword:");
-		write(os, pass);
-		readUntil(is, os, "JS-DC01-N7K-1-Access# ");
-		write(os, "config");
-		readUntil(is, os, "JS-DC01-N7K-1-Access(config)# ");
-		write(os, "term len 0");
-		readUntil(is, os, "JS-DC01-N7K-1-Access(config)# ");
-		write(os, "end");
-		readUntil(is, os, "JS-DC01-N7K-1-Access# ");
-		write(os, "show cdp neighbors detail | xml");
-		System.out.println(readUntil(is, os, "JS-DC01-N7K-1-Access# "));
+//		write(os, pass);
+		System.out.println(readUntil(is, os, "# "));
 		tc.disconnect();
 	}
 
