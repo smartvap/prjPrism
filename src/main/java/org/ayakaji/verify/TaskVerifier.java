@@ -5,21 +5,25 @@ import java.util.TimerTask;
 
 public class TaskVerifier {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		Timer t = new Timer();
 		t.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				System.out.println("Hello!");
+				System.out.println("Hello Once!");
 			}
-		}, 5000);
+		}, 2000);
 		t.scheduleAtFixedRate(new TimerTask() {
 			
 			@Override
 			public void run() {
-				System.out.println("Hello!");
+				System.out.println("Hello Cycle!");
 			}
-		}, 5000, 3000);
+		}, 1000, 3000);
+		Thread.sleep(10000);
+		t.cancel();
+		t.purge();
+		t = null;
 	}
 
 }

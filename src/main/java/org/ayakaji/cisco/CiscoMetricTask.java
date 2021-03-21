@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.net.SocketException;
+import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -12,14 +13,14 @@ import org.apache.commons.net.telnet.TelnetClient;
 import org.ayakaji.conf.IniUtil;
 import org.ini4j.Profile.Section;
 
-public class CiscoWrapper {
-	private static final Logger logger = Logger.getLogger(CiscoWrapper.class.getName());
+public class CiscoMetricTask {
+	private static final Logger logger = Logger.getLogger(CiscoMetricTask.class.getName());
 	private static final String CISCO_INI = "cisco.ini";
-	private static final Set<Entry<String, Section>> ciscoSystems;
+	
 
 	static {
-		ciscoSystems = IniUtil.readIni(CISCO_INI);
-		// Add Config Verify
+		
+		
 	}
 
 	public static void main(String[] args) throws SocketException, IOException {
@@ -28,16 +29,16 @@ public class CiscoWrapper {
 		// Regex Parse
 		// DOM Read
 		
-		TelnetClient tc = new TelnetClient();
+//		TelnetClient tc = new TelnetClient();
 //		tc.connect(ip, port);
-		InputStream is = tc.getInputStream();
-		PrintStream os = new PrintStream(tc.getOutputStream());
-		readUntil(is, os, "login:");
-//		write(os, user);
-		readUntil(is, os, "assword:");
-//		write(os, pass);
-		System.out.println(readUntil(is, os, "# "));
-		tc.disconnect();
+//		InputStream is = tc.getInputStream();
+//		PrintStream os = new PrintStream(tc.getOutputStream());
+//		readUntil(is, os, "login:");
+////		write(os, user);
+//		readUntil(is, os, "assword:");
+////		write(os, pass);
+//		System.out.println(readUntil(is, os, "# "));
+//		tc.disconnect();
 	}
 
 	/**
