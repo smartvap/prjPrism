@@ -1,0 +1,39 @@
+################
+# 棱镜代理部署说明 #
+################
+
+# 1、活动代理
+# sys_id 为sigar/oshi组件获取到的棱镜所在主机的计算机系统标识
+# agent_type 为棱镜代理类型，分远程和本地两种
+# ip_list 为棱镜代理所在主机的网卡IP列表
+# update_time 为最近一次心跳的时间
+curl -H 'Content-Type: application/json' -XPUT -d \
+'{
+  "settings": {
+    "number_of_shards": 3,
+	"number_of_replicas": 2
+  },
+  "mappings": {
+    "properties": {
+      "sys_id": { "type": "text" },
+	  "agent_type": { "type": "text" },
+	  "ip_list": { "type": "text" },
+	  "update_time": { "type": "date" }
+    }
+  }
+}' \
+http://10.19.249.28:9200/idx_alive_agent
+
+# 删除
+curl -XDELETE http://10.19.249.28:9200/idx_alive_agent
+
+# 插入数据
+
+
+# 心跳为5s
+# 为确保全网同一时刻仅有一台远程代理运行，在代理启动时和定时心跳过程中进行以下判断：
+# 1）首先判断数据库是否存在idx_alive_agent索引，若不存在则执行建表操作，并写入自己的心跳信息，正常运行；
+# 2）若索引中无数据，则等待10s后重新检查数据，若依旧不存在则写入自己的心跳信息，正常运行；
+# 3）若索引中有数据，则检查是否为自身，若不是自身且最近一次心跳在10分钟以内，则shutdown自己；
+# 4）若索引中有数据，且是自己，则更新心跳时间，继续运行；
+# 5）若存在多条数据的情况：需要删除自己的那条数据；

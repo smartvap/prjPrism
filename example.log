@@ -1,0 +1,109 @@
+DEBUG main org.apache.http.impl.nio.conn.PoolingNHttpClientConnectionManager - Connection manager is shutting down
+DEBUG main org.apache.http.impl.nio.conn.PoolingNHttpClientConnectionManager - Connection manager shut down
+DEBUG main org.apache.http.impl.nio.client.MainClientExec - [exchange: 1] start execution
+DEBUG main org.apache.http.client.protocol.RequestAddCookies - CookieSpec selected: default
+DEBUG main org.apache.http.client.protocol.RequestAuthCache - Re-using cached 'basic' auth scheme for http://localhost:9200
+DEBUG main org.apache.http.client.protocol.RequestAuthCache - No credentials for preemptive authentication
+DEBUG main org.apache.http.impl.nio.client.InternalHttpAsyncClient - [exchange: 1] Request connection for {}->http://localhost:9200
+DEBUG main org.apache.http.impl.nio.conn.PoolingNHttpClientConnectionManager - Connection request: [route: {}->http://localhost:9200][total kept alive: 0; route allocated: 0 of 10; total allocated: 0 of 30]
+DEBUG pool-1-thread-1 org.apache.http.impl.nio.conn.PoolingNHttpClientConnectionManager - Connection request failed
+java.net.ConnectException: Timeout connecting to [localhost/127.0.0.1:9200]
+	at org.apache.http.nio.pool.RouteSpecificPool.timeout(RouteSpecificPool.java:169)
+	at org.apache.http.nio.pool.AbstractNIOConnPool.requestTimeout(AbstractNIOConnPool.java:628)
+	at org.apache.http.nio.pool.AbstractNIOConnPool$InternalSessionRequestCallback.timeout(AbstractNIOConnPool.java:894)
+	at org.apache.http.impl.nio.reactor.SessionRequestImpl.timeout(SessionRequestImpl.java:184)
+	at org.apache.http.impl.nio.reactor.DefaultConnectingIOReactor.processTimeouts(DefaultConnectingIOReactor.java:214)
+	at org.apache.http.impl.nio.reactor.DefaultConnectingIOReactor.processEvents(DefaultConnectingIOReactor.java:158)
+	at org.apache.http.impl.nio.reactor.AbstractMultiworkerIOReactor.execute(AbstractMultiworkerIOReactor.java:351)
+	at org.apache.http.impl.nio.conn.PoolingNHttpClientConnectionManager.execute(PoolingNHttpClientConnectionManager.java:221)
+	at org.apache.http.impl.nio.client.CloseableHttpAsyncClientBase$1.run(CloseableHttpAsyncClientBase.java:64)
+	at java.lang.Thread.run(Thread.java:745)
+DEBUG pool-1-thread-1 org.apache.http.impl.nio.client.InternalHttpAsyncClient - [exchange: 1] connection request failed
+DEBUG main org.elasticsearch.client.RestClient - request [GET http://localhost:9200/idx_alive_agent?master_timeout=30s&ignore_unavailable=true&expand_wildcards=open&allow_no_indices=true&ignore_throttled=false&include_defaults=true] failed
+java.util.concurrent.ExecutionException: java.net.ConnectException: Timeout connecting to [localhost/127.0.0.1:9200]
+	at org.apache.http.concurrent.BasicFuture.getResult(BasicFuture.java:71)
+	at org.apache.http.concurrent.BasicFuture.get(BasicFuture.java:84)
+	at org.apache.http.impl.nio.client.FutureWrapper.get(FutureWrapper.java:70)
+	at org.elasticsearch.client.RestClient.performRequest(RestClient.java:279)
+	at org.elasticsearch.client.RestClient.performRequest(RestClient.java:270)
+	at org.elasticsearch.client.RestHighLevelClient.internalPerformRequest(RestHighLevelClient.java:1621)
+	at org.elasticsearch.client.RestHighLevelClient.performRequest(RestHighLevelClient.java:1606)
+	at org.elasticsearch.client.RestHighLevelClient.performRequestAndParseEntity(RestHighLevelClient.java:1573)
+	at org.elasticsearch.client.IndicesClient.get(IndicesClient.java:806)
+	at org.ayakaji.verify.ESVerifier.main(ESVerifier.java:22)
+Caused by: java.net.ConnectException: Timeout connecting to [localhost/127.0.0.1:9200]
+	at org.apache.http.nio.pool.RouteSpecificPool.timeout(RouteSpecificPool.java:169)
+	at org.apache.http.nio.pool.AbstractNIOConnPool.requestTimeout(AbstractNIOConnPool.java:628)
+	at org.apache.http.nio.pool.AbstractNIOConnPool$InternalSessionRequestCallback.timeout(AbstractNIOConnPool.java:894)
+	at org.apache.http.impl.nio.reactor.SessionRequestImpl.timeout(SessionRequestImpl.java:184)
+	at org.apache.http.impl.nio.reactor.DefaultConnectingIOReactor.processTimeouts(DefaultConnectingIOReactor.java:214)
+	at org.apache.http.impl.nio.reactor.DefaultConnectingIOReactor.processEvents(DefaultConnectingIOReactor.java:158)
+	at org.apache.http.impl.nio.reactor.AbstractMultiworkerIOReactor.execute(AbstractMultiworkerIOReactor.java:351)
+	at org.apache.http.impl.nio.conn.PoolingNHttpClientConnectionManager.execute(PoolingNHttpClientConnectionManager.java:221)
+	at org.apache.http.impl.nio.client.CloseableHttpAsyncClientBase$1.run(CloseableHttpAsyncClientBase.java:64)
+	at java.lang.Thread.run(Thread.java:745)
+DEBUG main org.elasticsearch.client.RestClient - added [[host=http://localhost:9200]] to blacklist
+DEBUG main org.apache.http.impl.nio.client.MainClientExec - [exchange: 1] start execution
+DEBUG main org.apache.http.client.protocol.RequestAddCookies - CookieSpec selected: default
+DEBUG main org.apache.http.client.protocol.RequestAuthCache - Re-using cached 'basic' auth scheme for http://10.19.249.28:9200
+DEBUG main org.apache.http.client.protocol.RequestAuthCache - No credentials for preemptive authentication
+DEBUG main org.apache.http.impl.nio.client.InternalHttpAsyncClient - [exchange: 1] Request connection for {}->http://10.19.249.28:9200
+DEBUG main org.apache.http.impl.nio.conn.PoolingNHttpClientConnectionManager - Connection request: [route: {}->http://10.19.249.28:9200][total kept alive: 0; route allocated: 0 of 10; total allocated: 0 of 30]
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.conn.PoolingNHttpClientConnectionManager - Connection leased: [id: http-outgoing-0][route: {}->http://10.19.249.28:9200][total kept alive: 0; route allocated: 1 of 10; total allocated: 0 of 30]
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.client.InternalHttpAsyncClient - [exchange: 1] Connection allocated: CPoolProxy{http-outgoing-0 [ACTIVE]}
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.conn.ManagedNHttpClientConnectionImpl - http-outgoing-0 134.80.19.88:49628<->10.19.249.28:9200[ACTIVE][r:]: Set attribute http.nio.exchange-handler
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.conn.ManagedNHttpClientConnectionImpl - http-outgoing-0 134.80.19.88:49628<->10.19.249.28:9200[ACTIVE][rw:]: Event set [w]
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.conn.ManagedNHttpClientConnectionImpl - http-outgoing-0 134.80.19.88:49628<->10.19.249.28:9200[ACTIVE][rw:]: Set timeout 0
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.client.InternalIODispatch - http-outgoing-0 [ACTIVE]: Connected
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.conn.ManagedNHttpClientConnectionImpl - http-outgoing-0 134.80.19.88:49628<->10.19.249.28:9200[ACTIVE][rw:]: Set attribute http.nio.http-exchange-state
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.client.InternalHttpAsyncClient - [exchange: 1] Start connection routing
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.client.InternalHttpAsyncClient - [exchange: 1] route completed
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.client.MainClientExec - [exchange: 1] Connection route established
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.client.MainClientExec - [exchange: 1] Attempt 1 to execute request
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.client.MainClientExec - [exchange: 1] Target auth state: UNCHALLENGED
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.client.MainClientExec - [exchange: 1] Proxy auth state: UNCHALLENGED
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.conn.ManagedNHttpClientConnectionImpl - http-outgoing-0 134.80.19.88:49628<->10.19.249.28:9200[ACTIVE][rw:]: Set timeout 30000
+DEBUG I/O dispatcher 1 org.apache.http.headers - http-outgoing-0 >> GET /idx_alive_agent?master_timeout=30s&ignore_unavailable=true&expand_wildcards=open&allow_no_indices=true&ignore_throttled=false&include_defaults=true HTTP/1.1
+DEBUG I/O dispatcher 1 org.apache.http.headers - http-outgoing-0 >> Content-Length: 0
+DEBUG I/O dispatcher 1 org.apache.http.headers - http-outgoing-0 >> Host: 10.19.249.28:9200
+DEBUG I/O dispatcher 1 org.apache.http.headers - http-outgoing-0 >> Connection: Keep-Alive
+DEBUG I/O dispatcher 1 org.apache.http.headers - http-outgoing-0 >> User-Agent: Apache-HttpAsyncClient/4.1.4 (Java/1.8.0_112)
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.conn.ManagedNHttpClientConnectionImpl - http-outgoing-0 134.80.19.88:49628<->10.19.249.28:9200[ACTIVE][rw:]: Event set [w]
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.client.MainClientExec - [exchange: 1] Request completed
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.conn.ManagedNHttpClientConnectionImpl - http-outgoing-0 134.80.19.88:49628<->10.19.249.28:9200[ACTIVE][rw:w]: 292 bytes written
+DEBUG I/O dispatcher 1 org.apache.http.wire - http-outgoing-0 >> "GET /idx_alive_agent?master_timeout=30s&ignore_unavailable=true&expand_wildcards=open&allow_no_indices=true&ignore_throttled=false&include_defaults=true HTTP/1.1[\r][\n]"
+DEBUG I/O dispatcher 1 org.apache.http.wire - http-outgoing-0 >> "Content-Length: 0[\r][\n]"
+DEBUG I/O dispatcher 1 org.apache.http.wire - http-outgoing-0 >> "Host: 10.19.249.28:9200[\r][\n]"
+DEBUG I/O dispatcher 1 org.apache.http.wire - http-outgoing-0 >> "Connection: Keep-Alive[\r][\n]"
+DEBUG I/O dispatcher 1 org.apache.http.wire - http-outgoing-0 >> "User-Agent: Apache-HttpAsyncClient/4.1.4 (Java/1.8.0_112)[\r][\n]"
+DEBUG I/O dispatcher 1 org.apache.http.wire - http-outgoing-0 >> "[\r][\n]"
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.client.InternalIODispatch - http-outgoing-0 [ACTIVE] Request ready
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.conn.ManagedNHttpClientConnectionImpl - http-outgoing-0 134.80.19.88:49628<->10.19.249.28:9200[ACTIVE][r:w]: Event cleared [w]
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.conn.ManagedNHttpClientConnectionImpl - http-outgoing-0 134.80.19.88:49628<->10.19.249.28:9200[ACTIVE][r:r]: 4123 bytes read
+DEBUG I/O dispatcher 1 org.apache.http.wire - http-outgoing-0 << "HTTP/1.1 200 OK[\r][\n]"
+DEBUG I/O dispatcher 1 org.apache.http.wire - http-outgoing-0 << "content-type: application/json; charset=UTF-8[\r][\n]"
+DEBUG I/O dispatcher 1 org.apache.http.wire - http-outgoing-0 << "content-length: 4035[\r][\n]"
+DEBUG I/O dispatcher 1 org.apache.http.wire - http-outgoing-0 << "[\r][\n]"
+DEBUG I/O dispatcher 1 org.apache.http.wire - http-outgoing-0 << "{"idx_alive_agent":{"aliases":{},"mappings":{"properties":{"agent_type":{"type":"text"},"ip_list":{"type":"text"},"sys_id":{"type":"text"},"update_time":{"type":"date"}}},"settings":{"index":{"routing":{"allocation":{"include":{"_tier_preference":"data_content"}}},"number_of_shards":"3","provided_name":"idx_alive_agent","creation_date":"1616234786343","number_of_replicas":"2","uuid":"v8SPMg83TM2qakmPuZyLRA","version":{"created":"7110299"}}},"defaults":{"index":{"flush_after_merge":"512mb","final_pipeline":"_none","max_inner_result_window":"100","unassigned":{"node_left":{"delayed_timeout":"1m"}},"max_terms_count":"65536","lifecycle":{"name":"","parse_origination_date":"false","indexing_complete":"false","rollover_alias":"","origination_date":"-1"},"routing_partition_size":"1","force_memory_term_dictionary":"false","max_docvalue_fields_search":"100","merge":{"scheduler":{"max_thread_count":"2","auto_throttle":"true","max_merge_count":"7"},"policy":{"reclaim_deletes_weight":"2.0","floor_segment":"2mb","max_merge_at_once_explicit":"30","max_merge_at_once":"10","max_merged_segment":"5gb","expunge_deletes_allowed":"10.0","segments_per_tier":"10.0","deletes_pct_allowed":"33.0"}},"max_refresh_listeners":"1000","max_regex_length":"1000","load_fixed_bitset_filters_eagerly":"true","number_of_routing_shards":"3","write":{"wait_for_active_shards":"1"},"verified_before_close":"false","mapping":{"coerce":"false","nested_fields":{"limit":"50"},"depth":{"limit":"20"},"field_name_length":{"limit":"9223372036854775807"},"total_fields":{"limit":"1000"},"nested_objects":{"limit":"10000"},"ignore_malformed":"false"},"source_only":"false","soft_deletes":{"enabled":"true","retention":{"operations":"0"},"retention_lease":{"period":"12h"}},"max_script_fields":"32","query":{"default_field":["*"],"parse":{"allow_unmapped_fields":"true"}},"format":"0","frozen":"false","sort":{"missing":[],"mode":[],"field":[],"order":[]},"priority":"1","codec":"default","max_rescore_window":"10000","max_adjacency_matrix_filters":"100","analyze":{"max_token_count":"10000"},"gc_deletes":"60s","top_metrics_max_size":"10","optimize_auto_generated_id":"true","max_ngram_diff":"1","hidden":"false","translog":{"generation_threshold_size":"64mb","flush_threshold_size":"512mb","sync_interval":"5s","retention":{"size":"-1","age":"-1"},"durability":"REQUEST"},"auto_expand_replicas":"false","mapper":{"dynamic":"true"},"recovery":{"type":""},"requests":{"cache":{"enable":"true"}},"data_path":"","highlight":{"max_analyzed_offset":"1000000"},"routing":{"rebalance":{"enable":"all"},"allocation":{"include":{"_tier":""},"exclude":{"_tier":""},"require":{"_tier":""},"enable":"all","total_shards_per_node":"-1"}},"search":{"slowlog":{"level":"TRACE","threshold":{"fetch":{"warn":"-1","trace":"-1","debug":"-1","info":"-1"},"query":{"warn":"-1","trace":"-1","debug":"-1","info":"-1"}}},"idle":{"after":"30s"},"throttled":"false"},"fielddata":{"cache":"node"},"default_pipeline":"_none","max_slices_per_scroll":"1024","shard":{"check_on_startup":"false"},"xpack":{"watcher":{"template":{"version":""}},"version":"","ccr":{"following_index":"false"}},"percolator":{"map_unmapped_fields_as_text":"false"},"allocation":{"max_retries":"5","existing_shards_allocator":"gateway_allocator"},"refresh_interval":"1s","indexing":{"slowlog":{"reformat":"true","threshold":{"index":{"warn":"-1","trace":"-1","debug":"-1","info":"-1"}},"source":"1000","level":"TRACE"}},"compound_format":"0.1","blocks":{"metadata":"false","read":"false","read_only_allow_delete":"false","read_only":"false","write":"false"},"max_result_window":"10000","store":{"stats_refresh_interval":"10s","type":"","fs":{"fs_lock":"native"},"preload":[],"snapshot":{"snapshot_name":"","index_uuid":"","cache":{"prewarm":{"enabled":"true"},"enabled":"true","excluded_file_types":[]},"uncached_chunk_size":"-1b","index_name":"","repository_name":"","snapshot_uuid":""}},"queries":{"cache":{"enabled":"true"}},"warmer":{"enabled":"true"},"max_shingle_diff":"3","query_string":{"lenient":"false"}}}}}"
+DEBUG I/O dispatcher 1 org.apache.http.headers - http-outgoing-0 << HTTP/1.1 200 OK
+DEBUG I/O dispatcher 1 org.apache.http.headers - http-outgoing-0 << content-type: application/json; charset=UTF-8
+DEBUG I/O dispatcher 1 org.apache.http.headers - http-outgoing-0 << content-length: 4035
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.client.InternalIODispatch - http-outgoing-0 [ACTIVE(4035)] Response received
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.client.MainClientExec - [exchange: 1] Response received HTTP/1.1 200 OK
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.client.InternalIODispatch - http-outgoing-0 [ACTIVE(4035)] Input ready
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.client.MainClientExec - [exchange: 1] Consume content
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.client.InternalHttpAsyncClient - [exchange: 1] Connection can be kept alive indefinitely
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.client.MainClientExec - [exchange: 1] Response processed
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.client.InternalHttpAsyncClient - [exchange: 1] releasing connection
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.conn.ManagedNHttpClientConnectionImpl - http-outgoing-0 134.80.19.88:49628<->10.19.249.28:9200[ACTIVE][r:r]: Remove attribute http.nio.exchange-handler
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.conn.PoolingNHttpClientConnectionManager - Releasing connection: [id: http-outgoing-0][route: {}->http://10.19.249.28:9200][total kept alive: 0; route allocated: 1 of 10; total allocated: 1 of 30]
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.conn.PoolingNHttpClientConnectionManager - Connection [id: http-outgoing-0][route: {}->http://10.19.249.28:9200] can be kept alive indefinitely
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.conn.ManagedNHttpClientConnectionImpl - http-outgoing-0 134.80.19.88:49628<->10.19.249.28:9200[ACTIVE][r:r]: Set timeout 0
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.conn.PoolingNHttpClientConnectionManager - Connection released: [id: http-outgoing-0][route: {}->http://10.19.249.28:9200][total kept alive: 1; route allocated: 1 of 10; total allocated: 1 of 30]
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.client.InternalIODispatch - http-outgoing-0 [ACTIVE] [content length: 4035; pos: 4035; completed: true]
+DEBUG main org.elasticsearch.client.RestClient - request [GET http://10.19.249.28:9200/idx_alive_agent?master_timeout=30s&ignore_unavailable=true&expand_wildcards=open&allow_no_indices=true&ignore_throttled=false&include_defaults=true] returned [HTTP/1.1 200 OK]
+DEBUG main org.apache.http.impl.nio.conn.PoolingNHttpClientConnectionManager - Connection manager is shutting down
+DEBUG main org.apache.http.impl.nio.conn.ManagedNHttpClientConnectionImpl - http-outgoing-0 134.80.19.88:49628<->10.19.249.28:9200[ACTIVE][r:r]: Close
+DEBUG I/O dispatcher 1 org.apache.http.impl.nio.client.InternalIODispatch - http-outgoing-0 [CLOSED]: Disconnected
+DEBUG main org.apache.http.impl.nio.conn.PoolingNHttpClientConnectionManager - Connection manager shut down
+WARN main org.elasticsearch.client.RestClient - request [POST http://10.19.249.28:9200/_search?typed_keys=true&max_concurrent_shard_requests=5&ignore_unavailable=false&expand_wildcards=open&allow_no_indices=true&ignore_throttled=true&search_type=query_then_fetch&batched_reduce_size=512&ccs_minimize_roundtrips=true] returned 1 warnings: [299 Elasticsearch-7.11.2-3e5a16cfec50876d20ea77b075070932c6464c7d "this request accesses system indices: [.apm-agent-configuration, .apm-custom-link, .async-search, .kibana_1, .kibana_2, .kibana_task_manager_1, .kibana_task_manager_2], but in a future major version, direct access to system indices will be prevented by default"]
