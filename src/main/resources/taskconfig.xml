@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+
+    <task-configs>
+        <!--任务配置信息，必填项 name 任务名称， type(immediate|cron|timed)分别代表立即执行|周期执行|在规定时间执行一次
+        如果type为cron或timed时，cron这一标签必填, 如果是timed cron中设置的时间必须是yyyy-MM-dd HH:mm:ss格式,
+        priority属性，默认为最高10不可配置-->
+        <task-group name="sysTask">
+
+        </task-group>
+        <!--任务配置信息，必填项 name 任务名称， type(immediate|cron|timed)分别代表立即执行|周期执行|在规定时间执行一次
+        如果type为cron或timed时，cron这一标签必填, 如果是timed cron中设置的时间必须是yyyy-MM-dd HH:mm:ss格式,
+        priority属性可选填，默认为5，可在1-10之间灵活配置-->
+        <task-group name="customTask">
+            <task name="ciscoDetectTask" type="cron" priority="7">
+                <cron>0 0 0 * * ? </cron>
+                <params>
+                    <param name="iniFile">global.ini</param>
+                    <param name="hostname">JS-DC01-N7K-1-Access</param>
+                    <param name="detectCmdItems">cdp-neighbors</param>
+                </params>
+                <task-class>org.ayakaji.cisco.CiscoMeticDetectTask</task-class>
+                <description>cisco交换机巡检指标探测任务</description>
+            </task>
+        </task-group>
+    </task-configs>
+    <scheduler-properties>
+        <property name="org.quartz.threadPool.class">org.quartz.simpl.SimpleThreadPool</property>
+        <property name="org.quartz.threadPool.threadCount">10</property>
+        <property name="org.quartz.jobStore.class">org.quartz.simpl.RAMJobStore</property>
+        <property name="org.quartz.jobStore.misfireThreshold">600000</property>
+    </scheduler-properties>
+</config>
