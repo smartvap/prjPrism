@@ -45,7 +45,12 @@ public class ScheduleDeamon {
 
     public void start() {
         try {
-            scheduler.start();
+            synchronized (scheduler) {
+                if (scheduler.isStarted()) {
+                    return;
+                }
+                scheduler.start();
+            }
         } catch (SchedulerException e) {
             logger.error("can not run task scheduler in this application exit because of kernel module error", e);
             System.exit(1);
@@ -106,20 +111,22 @@ public class ScheduleDeamon {
             }
         }
 //        普通任务加载
-        Element normaltaskConfigs = taskConfigs.element("sysTask");
+        Element normaltaskConfigs = taskConfigs.element("customTask");
         List<Element> normaltasks = normaltaskConfigs.elements();
 //        系统任务加载
         for (int i = 0, len = normaltasks.size(); i < len; i++) {
             Element normalTask = normaltasks.get(i);
             Element paramConfigE = normalTask.element("params");
-            List<Element> paramConfigs = paramConfigE.elements();
+            Properties taskParam = new Properties();;
+            if (paramConfigE != null) {
+                List<Element> paramConfigs = paramConfigE.elements();
 //            读取任务的参数信息
-            Properties taskParam = new Properties();
-            paramConfigs.forEach(para ->{
-                String paraName = para.attributeValue("name");
-                String paraVal = para.getTextTrim();
-                taskParam.setProperty(paraName, paraVal);
-            });
+                paramConfigs.forEach(para ->{
+                    String paraName = para.attributeValue("name");
+                    String paraVal = para.getTextTrim();
+                    taskParam.setProperty(paraName, paraVal);
+                });
+            }
             String taskName = normalTask.attributeValue("name");
             String type = normalTask.attributeValue("type");
             String description = normalTask.elementTextTrim("description");
