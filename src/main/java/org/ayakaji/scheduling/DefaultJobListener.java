@@ -29,7 +29,7 @@ public class DefaultJobListener implements JobListener {
     public void jobToBeExecuted(JobExecutionContext context) {
         Job job = context.getJobInstance();
         JobKey key = context.getJobDetail().getKey();
-        String taskDetail = context.getJobDetail().getDescription();
+        String taskDetail = context.getTrigger().getDescription();
         try {
             job.getClass().getDeclaredMethod("preExecute", JobExecutionContext.class).invoke(job, context);
         } catch (IllegalAccessException|InvocationTargetException e) {
@@ -49,7 +49,7 @@ public class DefaultJobListener implements JobListener {
     public void jobExecutionVetoed(JobExecutionContext context) {
         JobKey key = context.getJobDetail().getKey();
         String trigger = key.getName();
-        String taskDetail = context.getJobDetail().getDescription();
+        String taskDetail = context.getTrigger().getDescription();
         logger.error("can not execute task" + trigger + " : " + taskDetail + " try to abort it");
         try {
             context.getScheduler().deleteJob(key);
@@ -67,7 +67,7 @@ public class DefaultJobListener implements JobListener {
         Job job = context.getJobInstance();
         JobKey key = context.getJobDetail().getKey();
         String trigger = key.getName();
-        String taskDetail = context.getJobDetail().getDescription();
+        String taskDetail = context.getTrigger().getDescription();
         if (jobException != null) {
             logger.error("Exception occured while executing task[{} : {}]", trigger, taskDetail, jobException);
         }
