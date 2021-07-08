@@ -160,6 +160,7 @@ public class DBUtil {
 				builder.endObject();
 			}
 			builder.endObject();
+
 			break;
 		default:
 			break;
@@ -188,7 +189,7 @@ public class DBUtil {
 	 * Create Index Variant 2
 	 * 
 	 * @param indexName
-	 * @param message
+	 * @param
 	 * @return
 	 * @throws IOException
 	 */

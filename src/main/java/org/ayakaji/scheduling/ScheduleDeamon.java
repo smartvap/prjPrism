@@ -43,6 +43,10 @@ public class ScheduleDeamon {
         }
     }
 
+    public Scheduler getScheduler() {
+        return scheduler;
+    }
+
     public void start() {
         try {
             synchronized (scheduler) {
@@ -135,7 +139,7 @@ public class ScheduleDeamon {
             String priority = normalTask.attributeValue("priority", String.valueOf(defaultNormalPriority));
             int priorityVal = Integer.valueOf(priority);
             try {
-                Trigger taskTrigger = TriggerCreator.valueOf(type).buildTrigger(cron, "sysTask", taskName,
+                Trigger taskTrigger = TriggerCreator.valueOf(type).buildTrigger(cron, "customTask", taskName,
                         description, priorityVal, taskParam);
                 Class<? extends Job> jobClass = (Class<? extends Job>) Class.forName(taskClassName);
                 JobDetail jobDetail = JobBuilder.newJob(jobClass).withIdentity(taskTrigger.getJobKey()).storeDurably().build();
@@ -181,6 +185,22 @@ public class ScheduleDeamon {
         return instance;
     }
 
+    public void interruptTask(JobKey taskKey) {
+        logger.info("try to interrupt task {}.{}", taskKey.getGroup(), taskKey.getName());
+        try {
+            boolean taskExist = scheduler.checkExists(taskKey);
+            if (!taskExist) {
+                logger.info("the task {}.{} is not exist no need to interrupt it", taskKey.getGroup(), taskKey.getName());
+            }
+            boolean interruptResult = scheduler.interrupt(taskKey);
+            logger.debug("interrupt task {}.{} result: {}", taskKey.getGroup(), taskKey.getName(), interruptResult);
+        } catch (UnableToInterruptJobException e) {
+            logger.error("can not interrupt task {}.{}", taskKey.getGroup(), taskKey.getName(), e);
+        } catch (SchedulerException e) {
+            logger.error("can not check whether the task {}.{} exists", taskKey.getGroup(), taskKey.getName(), e);
+        }
+    }
+
 
     private static enum TriggerCreator{
         immediate {
@@ -189,7 +209,7 @@ public class ScheduleDeamon {
                                         int priority, Properties params) throws Exception {
                 TriggerKey key = new TriggerKey(taskName, groupName);
                 JobDataMap dataMap = buildDataMap(params);
-                Trigger trigger = TriggerBuilder.newTrigger().withIdentity(key).startNow().withDescription(description).
+                Trigger trigger = TriggerBuilder.newTrigger().forJob(taskName, groupName).withIdentity(key).startNow().withDescription(description).
                         withPriority(priority).withSchedule(SimpleScheduleBuilder.simpleSchedule()).usingJobData(dataMap)
                         .build();
                 return trigger;
@@ -201,7 +221,7 @@ public class ScheduleDeamon {
                 TriggerKey key = new TriggerKey(taskName, groupName);
                 CronExpression.validateExpression(cron);
                 JobDataMap dataMap = buildDataMap(params);
-                Trigger trigger = TriggerBuilder.newTrigger().withIdentity(key).withDescription(description).
+                Trigger trigger = TriggerBuilder.newTrigger().forJob(taskName, groupName).withIdentity(key).withDescription(description).
                         withPriority(priority).withSchedule(CronScheduleBuilder.cronSchedule(cron)).usingJobData(dataMap)
                         .build();
                 return trigger;
@@ -215,7 +235,7 @@ public class ScheduleDeamon {
                 DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Date startTime = formatter.parse(cron);
                 JobDataMap dataMap = buildDataMap(params);
-                Trigger trigger = TriggerBuilder.newTrigger().withIdentity(key).startAt(startTime).withDescription(description).
+                Trigger trigger = TriggerBuilder.newTrigger().forJob(taskName, groupName).withIdentity(key).startAt(startTime).withDescription(description).
                         withPriority(priority).withSchedule(SimpleScheduleBuilder.simpleSchedule()).usingJobData(dataMap)
                         .build();
                 return trigger;

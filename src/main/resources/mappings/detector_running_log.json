@@ -1,0 +1,31 @@
+{
+  "detector_running_log": {
+    "properties": {
+      "occurTime": {
+        "type": "date",
+        "format": "strict_date_optional_time||epoch_millis"
+      },
+      "level": {
+        "type": "string",
+        "index": "analyzed"
+      },
+      "hostName": {
+        "type": "string",
+        "index": "analyzed"
+      },
+      "ipAddr": {
+        "type": "ip",
+        "fielddata": true
+      },
+      "message": {
+        "type": "string",
+        "index": "analyzed",
+        "fielddata": true
+      },
+      "messageDetail": {
+        "type": "string",
+        "index": "no"
+      }
+    }
+  }
+}

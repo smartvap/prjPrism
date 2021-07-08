@@ -45,8 +45,6 @@ public class CommonNetWrapper {
 
 	/**
 	 * 
-	 * @param ip
-	 * @param port
 	 * @return
 	 */
 	public boolean connect() {
@@ -78,7 +76,6 @@ public class CommonNetWrapper {
 	/**
 	 * Disconnect from telnet server.
 	 * 
-	 * @param tc
 	 */
 	public void disconnect() {
 		try {
@@ -162,7 +159,6 @@ public class CommonNetWrapper {
 		try {
 			xml = readUntil(id + "# ");
 		} catch (IOException e) {
-			// TODO 自动生成的 catch 块
 			e.printStackTrace();
 		}
 //		xml = xml.replaceFirst("show cdp neighbors detail \\| xml\r\r", "");
@@ -183,8 +179,6 @@ public class CommonNetWrapper {
 	 * configure term len 0, but it will cause a potential command stuck risk, which
 	 * will cause a backlog of the telnet process. </Bug>
 	 * 
-	 * @param is
-	 * @param os
 	 * @param pattern
 	 * @return
 	 * @throws IOException

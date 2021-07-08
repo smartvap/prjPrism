@@ -5,15 +5,14 @@
         <!--任务配置信息，必填项 name 任务名称， type(immediate|cron|timed)分别代表立即执行|周期执行|在规定时间执行一次
         如果type为cron或timed时，cron这一标签必填, 如果是timed cron中设置的时间必须是yyyy-MM-dd HH:mm:ss格式,
         priority属性，默认为最高10不可配置-->
-        <task-group name="sysTask">
+        <sysTask>
 
-        </task-group>
+        </sysTask>
         <!--任务配置信息，必填项 name 任务名称， type(immediate|cron|timed)分别代表立即执行|周期执行|在规定时间执行一次
         如果type为cron或timed时，cron这一标签必填, 如果是timed cron中设置的时间必须是yyyy-MM-dd HH:mm:ss格式,
         priority属性可选填，默认为5，可在1-10之间灵活配置-->
-        <task-group name="customTask">
-            <task name="ciscoDetectTask" type="cron" priority="7">
-                <cron>0 0 0 * * ? </cron>
+        <customTask>
+            <!--<task name="ciscoDetectTask" type="cron" priority="7" cron="0 0 0 * * ?">
                 <params>
                     <param name="iniFile">global.ini</param>
                     <param name="hostname">JS-DC01-N7K-1-Access</param>
@@ -21,8 +20,37 @@
                 </params>
                 <task-class>org.ayakaji.cisco.CiscoMeticDetectTask</task-class>
                 <description>cisco交换机巡检指标探测任务</description>
+            </task>-->
+            <!--测试任务-->
+            <!--测试立即执行任务-->
+            <!--<task name="TestExecImmediateTask" type="immediate" priority="7">
+                <task-class>org.ayakaji.testTasks.TestExecImmediateTask</task-class>
+                <description>测试立即执行任务</description>
+            </task>-->
+            <!--测试周期执行任务-->
+            <!--<task name="TestExecCronTask" type="cron" priority="7" cron="0 0/3 * * * ?">
+                <task-class>org.ayakaji.testTasks.TestExecCronTask</task-class>
+                <description>测试周期执行任务</description>
+            </task>-->
+            <!--测试定时执行任务-->
+            <!--<task name="TestExecTimedTask" type="timed" priority="7" cron="2021-04-19 11:15:00">
+                <task-class>org.ayakaji.testTasks.TestExecTimedTask</task-class>
+                <description>测试定时执行任务</description>
+            </task>-->
+            <!--测试任务参数读取-->
+            <!--<task name="TestExecImmediateTask" type="immediate" priority="7">
+                <params>
+                    <param name="param">test Param</param>
+                </params>
+                <task-class>org.ayakaji.testTasks.TestReadParamTask</task-class>
+                <description>测试读取参数执行任务</description>
+            </task>-->
+            <!--测试任务中断-->
+            <task name="InterruptTestTask" type="immediate" priority="7" cron="0 0/3 * * * ?">
+                <task-class>org.ayakaji.testTasks.InterruptTestTask</task-class>
+                <description>测试中断执行任务</description>
             </task>
-        </task-group>
+        </customTask>
     </task-configs>
     <scheduler-properties>
         <property name="org.quartz.threadPool.class">org.quartz.simpl.SimpleThreadPool</property>

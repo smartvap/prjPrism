@@ -12,6 +12,7 @@
 		<Console name="Console" target="SYSTEM_OUT">
 			<PatternLayout pattern="${log_pattern}" />
 		</Console>
+
 		<RollingFile name="RollingFile"
 			filename="${log_dir}/${file_name}.log"
 			filepattern="${log_dir}/$${date:yyyy-MM}/${file_name}-%d{yyyy-MM-dd}-%i.log">
@@ -40,12 +41,18 @@
 					interval="1" />
 			</Policies>
 		</RollingFile>
+
+		<ESLogAppender name="ESLogAppender">
+		</ESLogAppender>
 	</Appenders>
 	<Loggers>
 		<Root level="${log_level}">
 			<AppenderRef ref="Console" />
 			<AppenderRef ref="RollingFile" />
 			<appender-ref ref="RollingFileErr" />
+			<!--<appender-ref ref="ESLogAppender" />-->
 		</Root>
 	</Loggers>
+	<!--<AsyncLogger name="runningLogger">
+	</AsyncLogger>-->
 </Configuration>

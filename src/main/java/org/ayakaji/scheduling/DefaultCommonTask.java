@@ -28,7 +28,11 @@ public abstract class DefaultCommonTask implements InterruptableJob {
      * @throws JobExecutionException
      */
     @Override
-    public abstract void execute(JobExecutionContext context) throws JobExecutionException;
+    public  void execute(JobExecutionContext context) throws JobExecutionException {
+        if (_interrupted) {
+            throw new JobExecutionException("task interrupted because of " + _interruptReason);
+        }
+    }
 
     /**
      * 后处理方法，在执行任务之后触发，包含执行任务时出现的异常
@@ -42,5 +46,10 @@ public abstract class DefaultCommonTask implements InterruptableJob {
     @Override
     public void interrupt() throws UnableToInterruptJobException {
         _interrupted = true;
+    }
+
+    public void interrupt(String message) {
+        _interrupted = true;
+        _interruptReason = message;
     }
 }
